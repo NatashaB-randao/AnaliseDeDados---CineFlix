@@ -108,12 +108,42 @@ SELECT SUM(preco_aluguel) AS receita_total FROM filmes;
 
 
 
--- CASE 7. Análise da satisfação dos clientes.
--- Podemos calcular a média das notas atribuídas pelos clientes aos filmes alugados como um indicador da satisfação geral dos clientes.
+-- CASE 7. Análise da satisfação dos clientes
 -- Essa análise é importante para avaliar a qualidade do catálogo de filmes e pode embasar decisões tanto de curto quanto de longo prazo, como a seleção de novos filmes para o catálogo.
 
 
-SELECT AVG(nota) AS media_notas FROM alugueis;
+-- Filmes com as maiores notas atribuídas pelos clientes
+SELECT 
+    f.titulo,
+    f.genero,
+    f.ano_lancamento,
+    MAX(a.nota) AS maior_nota
+FROM 
+    alugueis a
+JOIN 
+    filmes f ON a.id_filme = f.id_filme
+GROUP BY 
+    f.titulo, f.genero, f.ano_lancamento
+ORDER BY 
+    maior_nota DESC
+LIMIT 5; -- Podemos ajustar o número de filmes exibidos aqui
+
+-- Filmes com as menores notas atribuídas pelos clientes
+SELECT 
+    f.titulo,
+    f.genero,
+    f.ano_lancamento,
+    a.nota AS menor_nota
+FROM 
+    alugueis a
+JOIN 
+    filmes f ON a.id_filme = f.id_filme
+WHERE 
+    a.nota = (SELECT MIN(nota) FROM alugueis)
+ORDER BY 
+    a.nota ASC
+LIMIT 10; -- Podemos ajustar o número de filmes exibidos aqui
+
 
 
 -- CASE 8. Mensuração do engajamento dos clientes.
