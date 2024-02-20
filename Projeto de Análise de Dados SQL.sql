@@ -16,11 +16,12 @@ SELECT * FROM filmes;
 # =======        PARTE 1:        =======#
 # =======  CRIANDO AGRUPAMENTOS  =======#
 
--- CASE 1. Você deverá começar fazendo uma análise para descobrir o preço médio de aluguel dos filmes.
+-- CASE 1.Fazer uma análise para descobrir o preço médio de aluguel dos filmes.
 
+SELECT AVG(preco_aluguel) FROM filmes;
 
-
--- CASE 2. Agora que você sabe o preço médio para se alugar filmes na hashtagmovie, você deverá ir além na sua análise e descobrir qual é o preço médio para cada gênero de filme.
+-- CASE 2. Agora que sabemos o preço médio para se alugar filmes, podemos ir além na análise e descobrir qual é o preço médio 
+-- para cada gênero de filme.
 
 /*
 genero                   | preco_medio
@@ -34,19 +35,28 @@ Animação                 | C
 Ação e Aventura          | D
 */
 
-
+SELECT
+	genero,
+    ROUND(AVG(preco_aluguel), 2) AS preco_medio,
+    COUNT(*) AS qtd_filmes
+FROM filmes
+GROUP BY genero;
 
 
 # =======              PARTE 2:               =======#
 # =======       FILTROS EM AGRUPAMENTOS       =======#
 
--- Você deve alterar a consulta DO CASE 2 e considerar o seguinte cenário:
+-- Alterar a consulta DO CASE 2 e considerar o seguinte cenário:
 
 -- CASE 3: Fazer a mesma análise, mas considerando apenas os filmes com ANO_LANCAMENTO igual a 2011.
 
-
-
-
+SELECT
+	genero,
+    ROUND(AVG(preco_aluguel), 2) AS preco_medio,
+    COUNT(*) AS qtd_filmes
+FROM filmes
+WHERE ano_lancamento = 2011
+GROUP BY genero;
 
 
 
@@ -54,11 +64,15 @@ Ação e Aventura          | D
 # =======                         PARTE 3:                           =======#
 # =======  SUBQUERIES: UTILIZANDO UM SELECT DENTRO DE OUTRO SELECT   =======#
 
--- CASE 4. Você precisará fazer uma análise de desempenho dos alugueis. Para isso, uma análise comum é identificar quais aluguéis tiveram nota acima da média. Você seria capaz de fazer isso?
+-- CASE 4. Fazer uma análise de desempenho dos alugueis. 
+-- Para isso, uma análise comum é identificar quais aluguéis tiveram nota acima da média. 
 
-SELECT AVG(nota) FROM alugueis;
+SELECT AVG(nota) FROM alugueis;  -- 7.94
 
-
+SELECT 
+	*
+FROM alugueis
+WHERE nota >= (SELECT AVG(nota) FROM alugueis);
 
 
 
@@ -80,4 +94,3 @@ FROM filmes
 GROUP BY genero;
 
 SELECT * FROM resultado;
-
