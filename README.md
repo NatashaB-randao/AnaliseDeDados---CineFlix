@@ -14,7 +14,7 @@ O principal objetivo deste projeto é analisar os dados disponíveis no banco de
 1. Clone este repositório em seu ambiente local:
 
 ```
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
+git clone https://github.com/NatashaB-randao/AnaliseDeDados---CineFlix
 ```
 
 2. Importe o banco de dados "CineFlix" utilizando os scripts fornecidos na pasta "dados".
